@@ -1,0 +1,233 @@
+\documentclass[a4paper,fleqn,12pt,headsepline,twoside]{scrartcl}
+
+% Configure margins
+\usepackage{geometry}
+\geometry{left=3.5cm, right=2cm, top=2.5cm, bottom=2cm}
+
+% Use UTF-8 input encoding
+\usepackage[utf8]{inputenc}
+
+% Font encoding
+\usepackage[T1]{fontenc}
+
+% Font type
+%\usepackage{fix-cm}
+\usepackage{lmodern}
+%\usepackage{droid}
+%\usepackage{times}
+%\usepackage{librebaskerville}
+%\usepackage{libertine}
+%\usepackage{fourier}
+%\usepackage{fouriernc}
+%\usepackage{tgschola}
+%\usepackage[scaled=0.95]{helvet}
+
+% Make Sans-Serif the default font family
+%\renewcommand*\familydefault{\sfdefault}
+
+% Set parameters in Sans-Serif
+\newcommand{\file}[1]{\textsf{#1}}
+
+% Package for text colors
+\usepackage{color}
+
+% Utilize the same font and text color in captions as in the text body
+\setkomafont{disposition}{\normalcolor\bfseries}
+
+% Spell checking (English)
+\usepackage[english]{babel}
+
+% Hyphenation of words / terms not known to LaTeX
+\input{hyphenation}
+
+% Package for wrapping of long URLs
+\usepackage[hyphens,obeyspaces,spaces]{url}
+
+% Allow line breaks in URLs after any character or number
+\usepackage{etoolbox}
+\appto{\UrlBreaks}{\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\1\do\2\do\3\do\4\do\5\do\6\do\7\do\8\do\9}
+
+% No indentation at the beginning of a new paragraph; leave some vertical space instead
+\usepackage{parskip}
+
+% Package for line spacing
+%\usepackage{setspace}
+%\onehalfspacing % set line spacing to x1.5
+
+% Package for creating a custom header
+\usepackage{fancyhdr}
+\pagestyle{fancy} % individual style
+\fancyhf{} % clear all headers and footers
+\fancyhead[LO,RE]{\nouppercase{\leftmark}} % header left (odd) / right (even)
+\fancyhead[C]{} % header center
+\fancyhead[RO,LE]{\thepage} % header right (odd) / left (even)
+\renewcommand{\headrulewidth}{0.4pt} % upper separator line
+
+% Compose image numbering from section number and sequential number
+\renewcommand{\thefigure}{\arabic{section}.\arabic{figure}}
+\makeatletter\@addtoreset{figure}{section}\makeatother
+
+% Compose equation numbering from section number and sequential number
+\renewcommand{\theequation}{\arabic{section}.\arabic{equation}}
+\makeatletter\@addtoreset{equation}{section}\makeatother
+
+% Compose table numbering from section number and sequential number
+\renewcommand{\thetable}{\arabic{section}.\arabic{table}}
+\makeatletter\@addtoreset{table}{section}\makeatother
+
+% Support of "floating" objects in the text body
+\usepackage{float}
+
+% Package for including PDF-, PNG- and JPG-graphics
+\usepackage{graphicx}
+
+% Package for additional mathematical symbols
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{eurosym}
+
+% Command for three vertical dots in vectors and matrices
+\newcommand{\threevdots}{%
+    \vbox{\baselineskip1ex\lineskiplimit0pt%
+    \hbox{.}\hbox{.}\hbox{.}}}
+
+% Package for extended support of footnotes in environments like e.g. tables
+\usepackage{footnote}
+
+% Package for listings (of source code)
+\usepackage{listings}
+%
+\lstset{
+	basicstyle=\ttfamily,
+  	keywordstyle=\bfseries\ttfamily\color{orange},
+  	stringstyle=\color{green}\ttfamily,
+  	commentstyle=\color{gray}\ttfamily,
+   	showstringspaces=false,
+   	flexiblecolumns=false,
+   	tabsize=2,
+   	numbers=left,
+   	numberstyle=\tiny,
+   	numberblanklines=false,
+   	stepnumber=1,
+   	numbersep=10pt,
+   	xleftmargin=15pt,
+	breaklines=false
+}
+
+% Package for creating and incorporating QR codes
+\usepackage{qrcode}
+
+% Support of highlighted ToDo notes
+\setlength {\marginparwidth }{2cm} 
+\usepackage[colorinlistoftodos]{todonotes}
+
+% As KOMA employs different algorithms for the creation of floating environments in comparison to packages like e.g. listings (c.f. above), this package serves to establish compatibility between both. 
+\usepackage{scrhack}
+
+% Package for creating a table of contents w/ cross references (hyperlinks) to the respective chapters in the PDF version
+\usepackage[bookmarksnumbered,hyperfootnotes=false]{hyperref}
+\hypersetup{colorlinks,citecolor=black,linkcolor=black,urlcolor=blue}
+
+% Package for creating a nomenclature
+\usepackage{nomencl}
+%
+\renewcommand{\nomname}{Nomenclature}
+\setlength{\nomlabelwidth}{0.15\hsize} % maximum abbreviation width
+\renewcommand{\nomlabel}[1]{#1 \dotfill} % dots between abbreviations and explanations
+\setlength{\nomitemsep}{-\parsep} % reduce line spacing
+\makenomenclature
+%
+\input{nomenclature}
+
+% Quoting style
+\usepackage[babel,english=american]{csquotes}
+
+% Package for creating the references section
+\usepackage[
+      backend=biber,
+      sortlocale=auto,
+      bibencoding=auto,
+      bibstyle=alphabetic,
+      citestyle=alphabetic
+      %bibstyle=apa,
+      %citestyle=apa
+]{biblatex}
+\defbibheading{bib}{\section*{References}}
+\addbibresource{references.bib}
+
+\begin{document}
+
+\newcommand{\institutname}{Institute for\\ Applied Informatics}
+\newcommand{\thetitle}{Impact of modularization on learning behavior and detection rate of Convolutional Neural Networks}
+\newcommand{\theauthor}{Lukas Friedrichsen}
+\newcommand{\studentnumber}{013200111}
+\newcommand{\discipline}{Mechatronics \& Information Technology}
+\newcommand{\degree}{Master of Engineering}
+\newcommand{\dokumentname}{Master's Thesis }
+\newcommand{\finaldate}{June 26th, 2020}
+
+% Title page
+\input{title_page}
+
+% Roman page numbering
+\pagenumbering{Roman}
+
+% Abstract
+\cleardoublepage
+\fancyhead[LO,RE]{Abstract}
+\input{abstract}
+
+% Table of contents
+\cleardoublepage
+\fancyhead[LO,RE]{Table of contents}
+\tableofcontents
+
+% Nomenclature
+\cleardoublepage
+\addcontentsline{toc}{section}{Nomenclature}
+\fancyhead[LO,RE]{Nomenclature}
+\printnomenclature
+
+\cleardoublepage
+
+% Reset header to automatic
+\fancyhead[LO,RE]{\nouppercase{\leftmark}}
+
+% Arabic page numbering
+\pagenumbering{arabic}
+
+% Main body
+\input{main_body}
+\cleardoublepage
+
+% References
+\addcontentsline{toc}{section}{References}
+\fancyhead[LO,RE]{References} % manually set header title
+\printbibliography[heading = bib]
+\cleardoublepage
+
+% Reset header to automatic
+\fancyhead[LO,RE]{\nouppercase{\leftmark}}
+
+% List of figure
+\addcontentsline{toc}{section}{List of figures}
+\listoffigures
+\cleardoublepage
+
+% List of tables
+\addcontentsline{toc}{section}{List of tables}
+\listoftables
+\cleardoublepage
+
+% Appendix
+\addcontentsline{toc}{section}{Appendix}
+\fancyhead[LO,RE]{Appendix}
+\appendix
+\input{appendix}
+\cleardoublepage
+
+% Affidavit
+\fancyhead[LO,RE]{Affidavit}
+\input{affidavit}
+
+\end{document}

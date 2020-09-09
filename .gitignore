@@ -1,0 +1,9 @@
+# Ignore training logs and model checkpoints
+.model_checkpoints/
+logs/
+
+# Ignore IPython checkpoints
+.ipynb_checkpoints/
+
+# Ignore OS-specific files
+.DS_Store

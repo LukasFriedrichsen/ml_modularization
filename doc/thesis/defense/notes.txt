@@ -1,0 +1,310 @@
+Defense Master's Thesis
+=======================
+
+Time Frame: 20-25min
+Estimated Time / Sentence: 30sec
+Maximum Amount of Sentences: 50
+
+Content:
+
+- Abstract
+    * The recent rise in task complexity coupled with the inherent
+      shortcomings of neural networks have led to a decline in
+      practical applicability of Deep Learning in many real-world
+      scenarios.
+    * To address this issue, we propose modularization as a technique
+      to reduce hardware requirements for training and inference of
+      models and to facilitate knowledge transfer, interpretability
+      of predictions and operability in dynamic environments.
+    
+ - Why?
+    * Specifically, we argue that by decomposing a monolithic model
+      in multiple interconnected submodules, the necessary computing
+      power for training and inference is reduced.
+    * Moreover, a composed model can flexibly be modified, extended
+      and retrained if necessary subsequent to the initial training.
+    * Similarly, we hypothesize that as the modules of a composed
+      network are naturally less specialized than the initial
+      monolithic network, they are more accessible to transfer
+      learning and it becomes easier to refactor knowledge; in the
+      most extreme case, it may even become possible to build
+      complete models solely from pretrained "building blocks".
+    * As a positive ancillary effect, modularization simplifies the
+      interpretability of the model’s decision making process since
+      humans equally tend to decompose complex problems into simpler
+      sub-problems; hence, we argue that forecasts based on several
+      iterative sub-decisions are easier to comprehend than
+      monolithic predictions without intermediate results.
+
+- Central Questions
+    * In this work, we examined the central question whether it is
+      possible to decompose an existing monolithic model to obtain
+      the above properties while at the same time retaining an
+      acceptable degree of performance.
+    * We do not answer if it is generally possible to modularize any
+      arbitrary model without loss of performance at all, nor do we
+      derive bounds with regard to the latter, however. 
+    * Before this background, we furthermore assessed the following
+      secondary questions:
+    * How does modularization affect the learning behavior and
+      detection rate of a model?
+    * How are decomposition and error rate of a network related?
+    * Are modularized models less stable than monolithic models?
+
+- Scope
+    * While the presented concepts are theoretically transferable to
+      arbitrary models, in this work we limit our focus to DAGs
+      (Directed Acyclic Graphs), in particular CNNs as a subcategory
+      of neural networks.
+    * We provide a theoretical foundation and investigate the
+      approach experimentally using different scenarios from the
+      field of object classification to answer the above questions.
+
+- Distinction to Related Works
+    * Similar approaches have been repeatedly investigated for
+      different partial aspects of the described problems; what
+      distinguishes our work, however, is that we do not assess
+      modularization as an extension of but rather as an
+      alternative to conventional models.
+
+- Theoretic Foundation
+    - Decomposable Dimensions of Machine Learning Models
+        * As a basic theoretical foundation, we identified three
+          different general dimensions constituting ML models that
+          can be subject of modularization - the task, the model and
+          the software dimension.
+        * We argued that decomposition on the task as well as on the
+          model layer infers information augmenting topology of the
+          search space into the model and do hence affect the nature
+          / behavior of the latter, whereas modularization on the
+          software layer does not infer any information at all.
+
+    - Types of Modularization
+        * Moreover, we found two different fundamental ways to
+          decompose a given system.
+        * We denote these as horizontal and vertical, whereby in this
+          case these terms denote the orientation of the
+          decomposition relative to the axis of the informational
+          flow.
+        * I.e. in a neural network, horizontal decomposition
+          describes intra-layer modularization, whereas vertical
+          decomposition refers to inter-layer modularization as can
+          e.g. be found in Gating or Chaining.
+
+    - Convergence and Performance Properties
+        * In an attempt to answer the initially formulated central
+          question of this work, we examined the convergence
+          properties of meta-networks composed from multiple
+          submodules.
+        * While we found a general evaluation of convergence
+          properties of arbitrarily decomposed models to be beyond
+          the scope of this work, we were able to come up with a
+          weaker formulation that we do consider sufficient in most
+          practical use-cases.
+        * Namely, we argued that if all individual submodules of a
+          composite network converge, convergence is guaranteed for
+          the overall model as well.
+        * Moreover, by logical deduction we were able to find that
+          the maximum improvement of performance a composed network
+          can achieve over a comparative monolithic network is
+          limited to the amount of information immanent to the
+          modularization; i.e. through more sophisticated
+          decompositions, the theoretically possible performance gain
+          can be increased at the price of similarly increased
+          specificity (as described by the "No free lunch theorem").
+        * Albeit, since there is no decomposition a neural network as
+          an universal approximator can not learn by itself (given
+          enough time and resources), we conclude that modularization
+          does not constitute a fundamental advantage in terms of
+          performance and that the primary benefits of this approach
+          do hence consist in its previously argued positive impact
+          on practical applicability. 
+
+    - Modularization Errors
+        - Basic Concept
+            * A major challenge of modularization, however, is
+              finding a suitable decomposition in the first place.
+            * In this regard, we argued that suboptimal
+              decompositions cause the model to lose abilitz to model
+              parts of the transformation defined by the 
+              interreltions of domain and codomain.
+            * We denoted the resulting deterioration of the model's
+              performance as modularization error and hypothesized
+              that the effect grows with increasing specificity of
+              the decomposition.
+
+        - Common Properties of Propagation (i.e. composed of three
+          terms, …)
+            * A qualitative analysis of the previously presented
+              forms of horizontal and vertical decomposition based on
+              the assumption that a composite model can be regarded
+              as a second-order network with module-level
+              nonlinearities confirmed this thesis.
+            * As an intuitive finding it can be observed that, except
+              for the additive aggregation where the individual error
+              terms simply added up, further decomposition always
+              affects the model's performance in three dimensions:
+              the impact of the modularization error inferred by the
+              new decomposition on the ground truth of the rest of
+              the model, the impact of the modularization error of
+              the other modularizations on the ground truth of the
+              novel module and the impact of the error inferred by
+              the additional decomposition on the errors of the other
+              decompositions.
+
+- Experiments
+    * To assess the validity of these theoretical findings and to
+      answer the initially formulated secondary questions, we
+      conducted three experiments on different tasks from the field
+      of image recognition.
+    * In all three experiments, we compared the performance of a
+      hierarchically composed network on the respective dataset to a
+      monolithic reference model.
+    * Similarly, the standard 10-crop procedure as described by
+      [Krizhevsky et al., 2012] was - with minor modifications -
+      employed for preprocessing, training and evaluation in each
+      test case.
+    * We leveraged the inherent label structure of the different
+      datasets for the construction of the meta-structure of the
+      composite networks in each experiment; however, in the case of
+      the ILSVRC 2012 animal subset, manual cleaning of the label
+      space was necessary in advance.
+
+    - CIFAR100
+        * In the first experiment, different performance metrics as
+          well as predictive distributions at varying hierarchical
+          label levels were measured during training and evaluation
+          on the CIFAR100 dataset for both the composite and the
+          monolithic model.
+        * With this, we tried to assess whether the approach in
+          general yields an acceptable degree of performance as well
+          as how modularization affects the learning behavior of a
+          network.
+        * With regard to the structure of the composed network, we
+          trained a total of 21 modules, one for the coarse layer and
+          for each subcategory.
+        * Both the composite as well as the reference model built
+          upon the MaxOut structure as described by [Goodfellow et
+          al., 2013] as the basic architecture.
+
+        - Short description of results
+            * The results of the composite network are comparably
+              worse than those of the monolithic model; however,
+              regarding that this was merely a first "blind shot"
+              without real optimization and a lot of guestimating
+              involved regarding aspects such as the training routine
+              or the optimal decompostion of the search space, the
+              composite network comes comparably close.
+            * Different aspects of learning behavior were discussed,
+              but the main finding of this experiment was that the
+              results support the thesis that it is indeed possible
+              to decompose a monolithic network while at the same
+              time retaining an acceptable degree of performance.
+            * A subsequent evaluation with a slightly different
+              method for computing the predictions of the composite
+              network furthermore showed that the results of the
+              composed network can indeed still be improved by quite
+              a lot.
+
+    - ImageNet Animal Subset
+        * In the second experiment replicated the tests of the first
+          experiment on the disproportionately more complex animal
+          subset of the ILSVRC 2012 dataset.
+        * In this case, the VGG architecture was employed for both
+          the composite and the monolithic model to compensate for
+          the higher complexity of the problem space.
+        * Furthermore, the meta-structure of the composed network
+          consisted of a total of 61 submodules over four
+          hierarchical layers.
+        * The primary goal of this experiment was to assess whether
+          the results of the first experiment could be reproduced for
+          models with more hierarchy levels and different network
+          architectures; moreover, we aimed to examine if the
+          modularization error propagated as suggested by our
+          theoretical findings.
+        * However, due to limitations regarding the available
+          computing power, each model could only be trained for a
+          limited duration of five epochs.
+
+        - Short description of results
+            * In consequence, we deliberately formulate the results
+              from this experiment defensively, i.e. we only use them
+              for cross-validation.
+            * Generally speaking, however, the findings do not
+              contradict the results of the first experiment in any
+              respect; moreover, they clearly illustrate the
+              advantage of a modularised approach in earlier phases
+              of the learning process over a monolithic network.
+
+    - Uncertainty
+        * The third experiment served to assess the effect of
+          modularization with regard to predictive robustness.
+        * For this, we evaluated the behavior of each a composite and
+          a monolithic model trained on CIFAR100 on the CIFAR100-C
+          and the CIFAR10 dataset, the first one consisting of
+          corrupted samples of CIFAR100 with varying degrees of
+          distributional shift and the second one serving as Out-Of-
+          Distribution (OOD) examples for testing purposes.
+        * Both models were kept similar in structure and architecture
+          to the first experiment here.
+
+        - Short description of results
+            * As expected, we could observe a slightly worse absolute
+              performance of the composed network in comparison to
+              the reference model similar to the first experiment.
+            * However interestingly, while the absolute offset in the
+              results can be interpreted as a direct consequence of
+              the error inferred by the modularization, the
+              qualitative behavior of both models is almost
+              completely identical.
+            * As can be seen, the rate with which the performance
+              decreases with increasing distributional data shift
+              resp. on the OOD data is – with minor deviations –
+              highly correlated.
+            * It can hence be concluded that the composite model is
+              not less robust than the non-modularized counterpart;
+              furthermore, these results suggest that while the
+              modularization introduces an absolute error that
+              impacts the performance of the model, it does not
+              significantly affect the overall behavior.
+
+- Conclusion
+    - Reference to how this answers the Central Questions
+        * Concluding, in this work it has been shown both
+          theoretically and experimentally - the latter at the
+          example of CNNs - that it is possible to decompose a
+          monolithic network to obtain several desirable properties
+          for practical applicability while at the same time
+          retaining an acceptable degree of performance.
+        * Regarding the secondary questions, a theoretical connection
+          was established between form of decomposition and inferred
+          modularization error that was at least qualitatively
+          confirmed in an experimental setting.
+        * Moreover, our findings suggest that composed models are not
+          less stable than monolithic networks; the results
+          furthermore indicate that modularization does not
+          substantially alter the behavior of the model.
+        * However, we also found that while the technique does
+          increase the practical applicability, it does at best not
+          improve, usually rather deteriorate the performance to a
+          certain degree while also introducing a slightly increased
+          development overhead.
+        
+      - Short Outlook
+          * Nevertheless, we consider the approach to be of interest
+            for further investigation; possible future research may
+            include empirical evaluation of our theoretical findings
+            and an assessment of different training algorithms and
+            techniques to find suitable decompositions.
+          * Furthermore, it might be of interest to networks composed
+            of submodules other than neural networks and up to which
+            degree transfer of modules between different composed
+            models is possible.
+
+      - Final Words
+          * In conclusion, we do believe the presented approach
+            possesses great potential, although from a practical
+            rather than from a performance perspective.
+          * This work opens up a new perspective on existing
+            approaches and provides the basis for a broad field of
+            further research.
