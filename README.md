@@ -6,8 +6,6 @@ Accompanying repository to the [Master's Thesis](./doc/masters_thesis.pdf) "Impa
 
 This respository contains both the theoretical work as well as the source code of the conducted experiments and the corresponding results. It is the goal of the author to facilitate scientific reproducibility and the provide a basis for similar / further research in this field by open-sourcing this project.
 
----
-
 ## Abstract
 
 The recent rise in task complexity coupled with the inherent shortcomings of neural networks have led to a decline in practical applicability of Deep Learning in many real-world scenarios. To address this issue, we propose modularization as a technique to reduce hardware requirements for training and inference of models and to facilitate knowledge transfer, interpretability of predictions and operability in dynamic environments. In this work, we examine the central question whether it is possible to decompose a conventional neural network to obtain the above properties while at the same time retaining an acceptable degree of performance. We restrict our considerations to the most common forms of modularization and assess the approach on a qualitative basis. We discuss advantages and disadvantages of the technique and provide a heuristic to estimate the error induced by specific forms of decomposition. Using different scenarios from the field of image recognition, we experimentally investigate the impact of modularization on the learning behavior and detection rate of CNNs. Furthermore, we evaluate whether networks composed of multiple modules are less stable than comparable monolithic models on corrupted versions of CIFAR100 and ImageNet. The results indicate that by means of modularization a good compromise between performance and applicability can be achieved for most practical use cases.
@@ -15,8 +13,6 @@ The recent rise in task complexity coupled with the inherent shortcomings of neu
 <p>&nbsp;</p>
 
 ![](./doc/thesis/graphics/graphics/basic_concept.jpeg)
-
----
 
 ## How to run the code?
 
